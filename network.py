@@ -14,7 +14,7 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
-
+sys.path.append('/home/jonny-smyth/Desktop/sumo/tools')
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
@@ -32,9 +32,10 @@ def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        print(step)
-
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
+        #print(step)
+        no_vehs = traci.lane.getLastStepVehicleNumber("bc_0")
+        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        print(no_vehs)
         for veh in det_vehs:
             if veh == "0ev":
                 print(veh)
