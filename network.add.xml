@@ -14,7 +14,22 @@
     </rerouter>
 -->
    
+    <e1Detector id="det_ab" lane="ab_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ba" lane="ba_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_bc" lane="bc_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_cb" lane="cb_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_cd" lane="cd_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_dc" lane="dc_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_da" lane="da_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ad" lane="ad_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ae" lane="ae_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ea" lane="ea_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_be" lane="be_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_eb" lane="eb_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ce" lane="ce_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ec" lane="ec_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_de" lane="de_0" pos="00" freq="30" file="det.out.xml" />
+    <e1Detector id="det_ed" lane="ed_0" pos="00" freq="30" file="det.out.xml" />
 
-    <e1Detector id="det_0" lane="bc_0" pos="60" freq="30" file="det.out.xml" />
 
 </additionals>

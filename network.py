@@ -34,7 +34,7 @@ def run():
         traci.simulationStep()
         print(step)
 
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
         for veh in det_vehs:
             if veh == "0ev":
                 print(veh)
