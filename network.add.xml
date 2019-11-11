@@ -1,0 +1,20 @@
+<additionals>
+
+<!--
+    <rerouter id="rerouter_0" edges="ab" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="ba"/>
+		</interval>
+    </rerouter>
+
+    <rerouter id="rerouter_2" edges="ba" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="ab"/>
+		</interval>
+    </rerouter>
+-->
+   
+
+    <e1Detector id="det_0" lane="bc_0" pos="60" freq="30" file="det.out.xml" />
+
+</additionals>
