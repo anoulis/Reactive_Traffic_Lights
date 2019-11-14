@@ -46,6 +46,10 @@ def getAllLightIds():
     lightList = traci.trafficlight.getIDList()
     #returns full list of lights ID in the env.
     return lightList
+
+def getRoute(routeID):
+    route = traci.route.getEdges(routeID)
+    return route
 # contains TraCI control loop
 def run():
     step = 0
@@ -53,10 +57,10 @@ def run():
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
         emPos = getEmPos()
-        print(emPos)
-        num_vehs = getNumberOfVehicles(emPos + '_0')
-        print(num_vehs)
-
+        #print(emPos)
+        #num_vehs = getNumberOfVehicles(emPos + '_0')
+        #print(num_vehs)
+        print(getRoute('route_0'))
 
 
         #print(getEmPos())
