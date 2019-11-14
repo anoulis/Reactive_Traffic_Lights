@@ -27,20 +27,34 @@ def get_options():
     return options
 
 
+def getEmPos():
+    emPos = traci.vehicle.getRoadID('0ev')
+    return emPos
+
+def getLightState(lightsID):
+    light = traci.trafficlight.getRedYellowGreenState(lightsID)
+    return light
+
+def getNumberOfVehicles(laneID):
+    no_vehs = traci.lane.getLastStepVehicleNumber(laneID)
+    return no_vehs
+
+def getAllLightIds():
+    lightList = traci.trafficlight.getIDList()
+    return lightList
 # contains TraCI control loop
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        #print(step)
-        no_vehs = traci.lane.getLastStepVehicleNumber("bc_0")
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
-        print(no_vehs)
+        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
+        #print(getEmPos())
+        #print("vehicles on bc_0 is ", no_vehs)
         for veh in det_vehs:
             if veh == "0ev":
                 print(veh)
-                traci.vehicle.changeTarget("0ev", "ce")
-                traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
+                #traci.vehicle.changeTarget("0ev", "ce")
+                #traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
 
         if step == 100:
             traci.vehicle.changeTarget("1", "de")
