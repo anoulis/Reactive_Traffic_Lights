@@ -29,18 +29,22 @@ def get_options():
 
 def getEmPos():
     emPos = traci.vehicle.getRoadID('0ev')
+    #return the road id
     return emPos
 
 def getLightState(lightsID):
     light = traci.trafficlight.getRedYellowGreenState(lightsID)
+    #returns the lights at the intersection values
     return light
 
 def getNumberOfVehicles(laneID):
     no_vehs = traci.lane.getLastStepVehicleNumber(laneID)
+    #returns the number of vehicles in the lane ID
     return no_vehs
 
 def getAllLightIds():
     lightList = traci.trafficlight.getIDList()
+    #returns full list of lights ID in the env.
     return lightList
 # contains TraCI control loop
 def run():
@@ -48,6 +52,13 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
+        emPos = getEmPos()
+        print(emPos)
+        num_vehs = getNumberOfVehicles(emPos + '_0')
+        print(num_vehs)
+
+
+
         #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
         for veh in det_vehs:
