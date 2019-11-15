@@ -14,6 +14,7 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
+#sys.path.append('/home/jonny-smyth/Desktop/sumo/tools')
 #sys.path.append('/home/chesare9000/Documents/MAS/1.Traffic/sumo/tools')
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
@@ -27,21 +28,102 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
+def getEmPos():
+    emPos = traci.vehicle.getRoadID('0ev')
+    #return the road id
+    return emPos
+
+def getLightState(lightsID):
+    light = traci.trafficlight.getRedYellowGreenState(lightsID)
+    #returns the lights at the intersection values
+    return light
+
+def getNumberOfVehicles(laneID):
+    no_vehs = traci.lane.getLastStepVehicleNumber(laneID)
+    #returns the number of vehicles in the lane ID
+    return no_vehs
+
+def getAllLightIds():
+    lightList = traci.trafficlight.getIDList()
+    #returns full list of lights ID in the env.
+    return lightList
+
+def getRoute(routeID):
+    route = traci.route.getEdges(routeID)
+    return route
+
+#Setters
+
+#Traffic Lights  ----------------------------------------------------------------
+def setLightState(lightID,state):
+    traci.trafficlight.setRedYellowGreenState(self,lightID,state)
+    #Sets the named tl's state as a tuple of light definitions from
+    #rugGyYuoO, for red, red-yellow, green, yellow, off, where
+    #lower case letters mean that the stream has to decelerate.
+
+#Vehicles--------------------------------------------------------------------------------
+def changeLane(vehID,laneID,duration):
+    traci.vehicle.changeLane(self, vehID, laneID, duration)
+                 #changeLane(     string,  int,   double) -> None
+    #Forces a lane change to the lane with the given index; if successful,
+    #the lane will be chosen for the given amount of time (in s).
+
+
+#Optional
+def changeSublane(vehID,side):
+    traci.vehicle.changeSublane(self, vehID, latDist)
+    #changeLane(string, double) -> None
+    #Forces a lateral change by the given amount
+    #(negative values indicate changing to the right, positive to the left).
+    #This will override any other lane change motivations but conform to
+    #safety-constraints as configured by laneChangeMode.
+
+
+
+# Routes--------------------------------------------------------------------------------
+def setRoute(vehID,edgeList):
+    traci.vehicle.setRoute(self, vehID, edgeList)
+    #setRoute(string, list) ->  None
+    #changes the vehicle route to given edges list.
+    #The first edge in the list has to be the one that the vehicle is at at the moment.
+    #example usage:
+    #setRoute('1', ['1', '2', '4', '6', '7'])
+    #this changes route for vehicle id 1 to edges 1-2-4-6-7
+
+#setRouteID(self, vehID, routeID)
+#setRouteID(string, string) -> None
+#Changes the vehicles route to the route with the given id.
+#-----Check if we are using IDs for the routes
+
+#Optional------------------------------------------------------------------------------
+def setRoutingMode(vehID,routingMode):
+    traci.vehicle.setRoutingMode(self, vehID, routingMode)
+    #sets the current routing mode:
+    #tc.ROUTING_MODE_DEFAULT    : use weight storages and fall-back to edge speeds (default)
+    #tc.ROUTING_MODE_AGGREGATED : use global smoothed travel times from device.rerouting
+#--------------------------------------------------------------------------------------
 
 # contains TraCI control loop
+
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        #print(step)
-        no_vehs = traci.lane.getLastStepVehicleNumber("bc_0")
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
-        print(no_vehs)
+        emPos = getEmPos()
+        #print(emPos)
+        #num_vehs = getNumberOfVehicles(emPos + '_0')
+        #print(num_vehs)
+        print(getRoute('route_0'))
+
+
+        #print(getEmPos())
+        #print("vehicles on bc_0 is ", no_vehs)
         for veh in det_vehs:
             if veh == "0ev":
                 print(veh)
-                traci.vehicle.changeTarget("0ev", "ce")
-                traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
+                #traci.vehicle.changeTarget("0ev", "ce")
+                #traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
 
         if step == 100:
             traci.vehicle.changeTarget("1", "de")
