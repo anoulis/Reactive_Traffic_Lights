@@ -52,6 +52,11 @@ def getRoute(routeID):
     route = traci.route.getEdges(routeID)
     return route
 
+
+#Possible Getters
+#getRoadID => Value of the current lane the vehicle is at
+
+
 #Setters
 
 #Traffic Lights  ----------------------------------------------------------------
@@ -65,7 +70,7 @@ def setLightState(lightID,state):
 #Vehicles--------------------------------------------------------------------------------
 def changeLane(vehID,laneID,duration):
     traci.vehicle.changeLane(vehID, laneID, duration)
-                 #changeLane(     string,  int,   double) -> None
+    #changeLane(string,int,double) -> None
     #Forces a lane change to the lane with the given index; if successful,
     #the lane will be chosen for the given amount of time (in s).
 
@@ -92,7 +97,7 @@ def setRoute(vehID,edgeList):
     #setRoute('1', ['1', '2', '4', '6', '7'])
     #this changes route for vehicle id 1 to edges 1-2-4-6-7
 
-    setRoute("ev_0", ['ab','be'])
+
 
 #setRouteID(self, vehID, routeID)
 #setRouteID(string, string) -> None
@@ -118,19 +123,18 @@ def run():
         #print(emPos)
         #num_vehs = getNumberOfVehicles(emPos + '_0')
         #print(num_vehs)
-        print(getRoute('route_0'))
 
+        if step==0:
+            print(getRoute('route_0'))
 
+        elif step==10:
+            lastRoad = traci.vehicle.getRoadID("0ev")
+            setRoute("0ev", [lastRoad,'bc','ce'])
+
+            print(lastRoad)
+            #traci.vehicle.changeTarget("0ev", "dc")
         #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
-        for veh in det_vehs:
-            if veh == "0ev":
-                print(veh)
-                #traci.vehicle.changeTarget("0ev", "ce")
-                #traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
-        if step == 10:
-
-
 
         #if step == 100:
             #traci.vehicle.changeTarget("1", "de")
