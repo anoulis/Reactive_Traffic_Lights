@@ -56,23 +56,25 @@ def getRoute(routeID):
 
 #Traffic Lights  ----------------------------------------------------------------
 def setLightState(lightID,state):
-    traci.trafficlight.setRedYellowGreenState(self,lightID,state)
+    traci.trafficlight.setRedYellowGreenState(lightID,state)
+    #Example : setLightState( "c" ,"GrGGGG")
     #Sets the named tl's state as a tuple of light definitions from
     #rugGyYuoO, for red, red-yellow, green, yellow, off, where
     #lower case letters mean that the stream has to decelerate.
 
 #Vehicles--------------------------------------------------------------------------------
 def changeLane(vehID,laneID,duration):
-    traci.vehicle.changeLane(self, vehID, laneID, duration)
+    traci.vehicle.changeLane(vehID, laneID, duration)
                  #changeLane(     string,  int,   double) -> None
     #Forces a lane change to the lane with the given index; if successful,
     #the lane will be chosen for the given amount of time (in s).
 
 
 #Optional
-def changeSublane(vehID,side):
-    traci.vehicle.changeSublane(self, vehID, latDist)
+def changeSublane(vehID,latDist):
+    traci.vehicle.changeSublane(vehID, latDist)
     #changeLane(string, double) -> None
+    #changeSublane("0ev",-1)
     #Forces a lateral change by the given amount
     #(negative values indicate changing to the right, positive to the left).
     #This will override any other lane change motivations but conform to
@@ -82,13 +84,15 @@ def changeSublane(vehID,side):
 
 # Routes--------------------------------------------------------------------------------
 def setRoute(vehID,edgeList):
-    traci.vehicle.setRoute(self, vehID, edgeList)
+    traci.vehicle.setRoute(vehID, edgeList)
     #setRoute(string, list) ->  None
     #changes the vehicle route to given edges list.
     #The first edge in the list has to be the one that the vehicle is at at the moment.
     #example usage:
     #setRoute('1', ['1', '2', '4', '6', '7'])
     #this changes route for vehicle id 1 to edges 1-2-4-6-7
+
+    setRoute("ev_0", ['ab','be'])
 
 #setRouteID(self, vehID, routeID)
 #setRouteID(string, string) -> None
@@ -97,7 +101,7 @@ def setRoute(vehID,edgeList):
 
 #Optional------------------------------------------------------------------------------
 def setRoutingMode(vehID,routingMode):
-    traci.vehicle.setRoutingMode(self, vehID, routingMode)
+    traci.vehicle.setRoutingMode(vehID, routingMode)
     #sets the current routing mode:
     #tc.ROUTING_MODE_DEFAULT    : use weight storages and fall-back to edge speeds (default)
     #tc.ROUTING_MODE_AGGREGATED : use global smoothed travel times from device.rerouting
@@ -110,7 +114,7 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
-        emPos = getEmPos()
+        #emPos = getEmPos()
         #print(emPos)
         #num_vehs = getNumberOfVehicles(emPos + '_0')
         #print(num_vehs)
@@ -124,10 +128,13 @@ def run():
                 print(veh)
                 #traci.vehicle.changeTarget("0ev", "ce")
                 #traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
+        if step == 10:
 
-        if step == 100:
-            traci.vehicle.changeTarget("1", "de")
-            traci.vehicle.changeTarget("3", "de")
+
+
+        #if step == 100:
+            #traci.vehicle.changeTarget("1", "de")
+            #traci.vehicle.changeTarget("3", "de")
 
         step += 1
 
