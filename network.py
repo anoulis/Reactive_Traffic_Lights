@@ -96,7 +96,7 @@ def setRoute(vehID,edgeList):
 #-----Check if we are using IDs for the routes
 
 #Optional------------------------------------------------------------------------------
-def setRoutingMode(vehID,routingMode)
+def setRoutingMode(vehID,routingMode):
     traci.vehicle.setRoutingMode(self, vehID, routingMode)
     #sets the current routing mode:
     #tc.ROUTING_MODE_DEFAULT    : use weight storages and fall-back to edge speeds (default)
