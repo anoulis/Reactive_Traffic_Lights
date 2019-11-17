@@ -15,7 +15,11 @@ else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
 #sys.path.append('/home/jonny-smyth/Desktop/sumo/tools')
-#sys.path.append('/home/chesare9000/Documents/MAS/1.Traffic/sumo/tools')
+
+#chesare9000
+#MAC -> export SUMO_HOME="/usr/local/opt/sumo/share/sumo
+#UBT -> sys.path.append('/home/chesare9000/Documents/MAS/1.Traffic/sumo/tools')
+
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -119,6 +123,7 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
+
         #emPos = getEmPos()
         #print(emPos)
         #num_vehs = getNumberOfVehicles(emPos + '_0')
@@ -129,9 +134,9 @@ def run():
 
         elif step==10:
             lastRoad = traci.vehicle.getRoadID("0ev")
-            setRoute("0ev", [lastRoad,'bc','ce'])
-
-            print(lastRoad)
+            print(lastRoad) #will be in ab
+            #setRoute("0ev", [lastRoad,'bc','ce', 'eb', 'bc', 'cd' ,  'de' , 'ec', 'cd' , 'da' ])
+            #traci.lane.setDisallowed('cd_0', ['1'])
             #traci.vehicle.changeTarget("0ev", "dc")
         #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
