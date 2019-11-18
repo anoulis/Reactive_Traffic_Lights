@@ -120,7 +120,7 @@ def setRoutingMode(vehID,routingMode):
 
 ## AGENT RELATED CODE
 
-def checkCurrentLights(road):
+def getLightID(road):
     if road == 'ab':
         lightID = 'b'
     elif road == 'bc':
@@ -158,31 +158,46 @@ def checkCurrentLights(road):
     elif road == 'be':
         lightID = 'e'
     else:
-        print('nada man')
+        #print('nada man')
         return
-    lights = getLightState(lightID)
-    return lights
+    return lightID
 
 ##here we need to write the code for the agent.
+
+def checkLightStatus(lightID):
+    lights = getLightState(lightID)
+    return lights
 
 def EmergncyAgent(emPos):
     #gets current road of emergency vehicle
     lightState = checkCurrentLights(emPos)
     num_vehs = getNumberOfVehicles(emPos + '_0')
-    if lightState != None:
-        print(lightState)
-        print(lightState[0])
-        print(lightState[1])
-        print(lightState[2])
-        if lightState[0] == 'G':
-            setLightState('b','GGrrGG')
-            print('hellowworld')
+    # if lightState != None:
+    #     print(lightState)
+    #     print(lightState[0])
+    #     print(lightState[1])
+    #     print(lightState[2])
+    #     if lightState[0] == 'G':
+    #         setLightState('b','GGrrGG')
+    #         print('hellowworld')
 
 
     return lightState, num_vehs
 
-#def TrafficAgent:
-#    print()
+
+def getLastPhase(lightID):
+    if lightID == None:
+        return
+    else:
+        last = traci.trafficlight.getPhase(lightID)
+        return last
+
+def getPhaseName(lights):
+    if lights == None:
+        return
+    else:
+        phasename = traci.trafficlight.getPhaseName(lights)
+        return phasename
 
 def run():
     step = 0
@@ -190,6 +205,7 @@ def run():
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
         emPos = getEmPos()
+        lights = getLightID(emPos)
         #print('em pos is ', emPos)
         #print(EmergncyAgent(emPos))
 
@@ -200,10 +216,10 @@ def run():
         #print("vehicles on bc_0 is ", no_vehs)
         for veh in det_vehs:
             if veh == "0ev":
-                print(veh)
+                #print(veh)
                 traci.vehicle.changeTarget("0ev", "ce")
                 lane = traci.vehicle.getLaneID("0ev")
-                print(getNumberOfVehicles(lane))
+                #print(getNumberOfVehicles(lane))
 
 
                 #print(traci.lane.getWaitingTime("bc_0"))
@@ -220,19 +236,19 @@ def run():
         lane = traci.vehicle.getLaneID("0ev")
         #print(traci.vehicle.getRoadID("0ev"))
         if traci.lane.getWaitingTime(lane) >= 0.1:
-            print(lane)
+            #print(lane)
             if lane == "bc_0":
-                print(traci.trafficlight.getControlledLanes("c"))
+                #print(traci.trafficlight.getControlledLanes("c"))
                 #print(traci.trafficlight.getControlledLanes("c").index("bc_0"))
                 last_traffic = traci.trafficlight.getPhase("c")
-                print(last_traffic)
+                #print(last_traffic)
                 mylight = ""
                 for i in traci.trafficlight.getControlledLanes("c"):
                     if i == lane:
                         mylight += "G"
                     else:
                         mylight += "r"
-                print (mylight)
+                #print (mylight)
                 setLightState("c",mylight)
             if lane == "ce_0":
                 #setLightState("c",last_traffic)
