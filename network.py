@@ -181,14 +181,12 @@ def EmergncyAgent(emPos):
 
     return lightState, num_vehs
 
-#def TrafficAgent:
-#    print()
-
 def Priority(lane):
     mylane = lane[:2]
     if checkCurrentLights(mylane) != None:
         lightID = checkCurrentLights(mylane)
         free_lane_pos = traci.vehicle.getLanePosition("0ev") / traci.lane.getLength(lane)
+        
         if traci.lane.getWaitingTime(lane) >= 0.1 or free_lane_pos >= 0.5:
             last_traffic = traci.trafficlight.getPhase(lightID)
             print(last_traffic)
@@ -200,7 +198,6 @@ def Priority(lane):
                      mylight += "r"
             print (mylight)
             setLightState(lightID,mylight)
-
 
 def run():
     step = 0
