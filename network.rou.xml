@@ -9,7 +9,8 @@
       		maxSpeed="20" guiShape="emergency" speedFactor="2.0"
       		minGapLat="0.2"/>
 
-    <route id="route_0" edges="ab bc cd da" />
+    <route id="route_1" edges="ab bc cd da" />
+    <route id="route_0" edges="ab bc ce ed da ae eb ba" />
     <!--<flow id="carflow" type="car" beg="0" end="0" number="5" from="ab" to="da"/>
     <flow id="evflow" type="ev" beg="0" end="0" number="1" from="ab" to="da"/>-->
     
@@ -34,6 +35,16 @@
     <trip id="7" depart="7.00" from="dc" to="bc"/>
     <trip id="8" depart="8.00" from="ea" to="dc"/>
     <trip id="9" depart="9.00" from="bc" to="ad"/>
+    <trip id="10" depart="10.00" from="cd" to="eb"/>
+    <trip id="11" depart="11.00" from="de" to="da"/>
+    <trip id="12" depart="12.00" from="ba" to="cb"/>
+    <trip id="13" depart="13.00" from="ab" to="cb"/>
+    <trip id="14" depart="14.00" from="ed" to="cb"/>
+    <trip id="15" depart="15.00" from="bc" to="da"/>
+    <trip id="16" depart="16.00" from="dc" to="ea"/>
+    <trip id="17" depart="17.00" from="cd" to="da"/>
+    <trip id="18" depart="18.00" from="ad" to="ab"/>
+    <trip id="19" depart="19.00" from="ba" to="ab"/>
 
     
 
