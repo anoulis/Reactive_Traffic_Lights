@@ -199,21 +199,16 @@ def getPhaseName(lights):
         phasename = traci.trafficlight.getPhaseName(lights)
         return phasename
 
+def setLightPhase(lightID,phase):
+    traci.trafficlight.setPhase(lightID,phase)
+
+
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
         emPos = getEmPos()
-        lights = getLightID(emPos)
-        #print('em pos is ', emPos)
-        #print(EmergncyAgent(emPos))
-
-        #print(num_vehs)
-        #print(getRoute('route_0'))
-
-        #print(getEmPos())
-        #print("vehicles on bc_0 is ", no_vehs)
         for veh in det_vehs:
             if veh == "0ev":
                 #print(veh)
