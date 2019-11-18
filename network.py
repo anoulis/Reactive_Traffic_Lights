@@ -124,32 +124,128 @@ def run():
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
 
-        #emPos = getEmPos()
-        #print(emPos)
-        #num_vehs = getNumberOfVehicles(emPos + '_0')
-        #print(num_vehs)
 
         if step==0:
-            print(getRoute('route_0'))
+            print("Initial Route: " + str(getRoute('route_0')))
+
 
         elif step==10:
-            lastRoad = traci.vehicle.getRoadID("0ev")
-            print(lastRoad) #will be in ab
 
-            setRoute("0ev", [lastRoad,'bc','ce', 'ed', 'da'])
-            #traci.lane.setDisallowed('cd_0', ['1'])
+            #Here check for the sensor on the vehicles
+            #lastRoad = traci.vehicle.getRoadID("0ev")
+            compare("bc_0")
+
+            #after running the function update
+            #the car route with the new restrictions
+
+
+
+            #Here read the last value of the list of initial coords
+            #and send it to the changeTarget fn.
+            #and put this just if closing a lane(inside the function)
+            traci.vehicle.changeTarget("0ev", "da")
+
+
+
             #traci.vehicle.changeTarget("0ev", "dc")
-        #print(getEmPos())
-        #print("vehicles on bc_0 is ", no_vehs)
+
+
+            #lastRoad = traci.vehicle.getRoadID("0ev")
+            #print(lastRoad) #will be in ab
+
+            #setRoute("0ev", [lastRoad,'bc','ce', 'ea'])
+
+            #print(getEmPos())
+            #print("vehicles on bc_0 is ", no_vehs)
 
         #if step == 100:
-            #traci.vehicle.changeTarget("1", "de")
+            #traci.vehicle.change   Target("1", "de")
             #traci.vehicle.changeTarget("3", "de")
 
         step += 1
 
+        if step==15:
+            #traci.lane.setDisallowed("ea_0",["emergency"]) #Ambulances are not Allowed
+            #print("Lane " + "ea " + "closed for the ambulance")
+            #traci.lane.setDisallowed("cd_0",["emergency"])
+            #print("Lane " + "cd " + "closed for the ambulance")
+
+            traci.vehicle.changeTarget("0ev", "da")
+            #print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+
     traci.close()
     sys.stdout.flush()
+
+
+
+def compare(laneToCompare):
+
+    links = traci.lane.getLinks(laneToCompare,False)
+
+    if len(links) == 2 :
+
+        first_lane= list(links[0])[0]
+        second_lane = list(links[1])[0]
+
+        print("Lane with " + str(len(links)) + " Junctions : "
+        + str(first_lane)+ " and " + str(second_lane))
+
+        #Comparing the Traffic on both adjacent lanes
+        #The one with more traffic will be closed
+        #If there is no traffic both remain open
+
+        first_lane_traffic = traci.lane.getLastStepVehicleNumber(first_lane)
+        print("Traffic on the Lane " + str(first_lane) + " : " + str(first_lane_traffic))
+        second_lane_traffic = traci.lane.getLastStepVehicleNumber(second_lane)
+        print("Traffic on the Lane " + str(second_lane) + " : " + str(second_lane_traffic))
+
+        if first_lane_traffic > second_lane_traffic:
+            laneToClose = first_lane
+            traci.lane.setDisallowed(str(laneToClose),["emergency"])
+            print("Lane " + str(laneToClose) + " closed for the ambulance")
+            return laneToClose
+
+        elif second_lane_traffic > first_lane_traffic:
+            laneToClose = second_lane
+            traci.lane.setDisallowed(str(laneToClose),["emergency"])
+            print("Lane " + str(laneToClose) + " closed for the ambulance")
+            return laneToClose
+
+        else: print("No lane will be closed")
+
+
+    elif len(links) == 3:
+
+        first_lane =  list(links[0])[0]
+        second_lane = list(links[1])[0]
+        third_lane =  list(links[2])[0]
+        print("Lane with " + str(len(links)) + " Junctions : "
+        + str(first_lane)  + " , " + str(second_lane) + " and " + str(third_lane))
+
+        first_lane_traffic = traci.lane.getLastStepVehicleNumber(first_lane)
+        print("Traffic on the Lane " + str(first_lane) + " : " + str(first_lane_traffic))
+        second_lane_traffic = traci.lane.getLastStepVehicleNumber(second_lane)
+        print("Traffic on the Lane " + str(second_lane) + " : " + str(second_lane_traffic))
+        third_lane_traffic = traci.lane.getLastStepVehicleNumber(third_lane)
+        print("Traffic on the Lane " + str(third_lane) + " : " + str(third_lane_traffic))
+
+        if first_lane_traffic > second_lane_traffic and first_lane_traffic > third_lane_traffic :
+            laneToClose = first_lane
+            traci.lane.setDisallowed(str(laneToClose),["emergency"])
+            print("Lane " + str(laneToClose) + " closed for the ambulance")
+
+        elif second_lane_traffic > first_lane_traffic and second_lane_traffic > third_lane_traffic:
+            laneToClose = second_lane
+            traci.lane.setDisallowed(str(laneToClose),["emergency"])
+            print("Lane " + str(laneToClose) + " closed for the ambulance")
+
+        elif third_lane_traffic > first_lane_traffic and third_lane_traffic > second_lane_traffic:
+            laneToClose = third_lane
+            traci.lane.setDisallowed(str(laneToClose),["emergency"])
+            print("Lane " + str(laneToClose) + " closed for the ambulance")
+
+        else : print("No lane will be closed")
+
 
 
 # main entry point

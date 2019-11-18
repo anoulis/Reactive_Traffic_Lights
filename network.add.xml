@@ -7,6 +7,35 @@
        </interval>
     </rerouter> -->
 
+    #Rerouter has to be placed before the closed Lane
+    <rerouter id="rerouter_0" edges= 'ab' probability="1" >
+      <!--<interval begin="20" end="1000">
+        <closingLaneReroute id="cd_0" />
+      </interval>
+
+      <interval begin="35" end="1000">
+        <closingLaneReroute id="ea_0"/> #disallow="passenger"
+      </interval>-->
+
+    </rerouter>
+
+    <rerouter id="rerouter_1" edges= 'ba' probability="1" />
+    <rerouter id="rerouter_2" edges= 'bc' probability="1" />
+    <rerouter id="rerouter_3" edges= 'cb' probability="1" />
+    <rerouter id="rerouter_4" edges= 'cd' probability="1" />
+    <rerouter id="rerouter_5" edges= 'dc' probability="1" />
+    <rerouter id="rerouter_6" edges= 'de' probability="1" />
+    <rerouter id="rerouter_7" edges= 'ed' probability="1" />
+    <rerouter id="rerouter_8" edges= 'ad' probability="1" />
+    <rerouter id="rerouter_9" edges= 'da' probability="1" />
+    <rerouter id="rerouter_10" edges= 'ce' probability="1" />
+    <rerouter id="rerouter_11" edges= 'ec' probability="1" />
+    <rerouter id="rerouter_12" edges= 'ae' probability="1" />
+    <rerouter id="rerouter_13" edges= 'ea' probability="1" />
+    <rerouter id="rerouter_14" edges= 'be' probability="1" />
+    <rerouter id="rerouter_15" edges= 'eb' probability="1" />
+
+
     <e1Detector id="det_ab" lane="ab_0" pos="00" freq="30" file="det.out.xml" />
     <e1Detector id="det_ba" lane="ba_0" pos="00" freq="30" file="det.out.xml" />
     <e1Detector id="det_bc" lane="bc_0" pos="00" freq="30" file="det.out.xml" />
