@@ -158,10 +158,6 @@ def getLightID(road):
     elif road == 'be':
         lightID = 'e'
     else:
-    #    print('Nothins')
-        return
-    #lights = getLightState(lightID)
-        #print('nada man')
         return
     return lightID
 
@@ -189,8 +185,8 @@ def EmergncyAgent(emPos):
 
 def Priority(lane):
     mylane = lane[:2]
-    if checkCurrentLights(mylane) != None:
-        lightID = checkCurrentLights(mylane)
+    if getLightID(mylane) != None:
+        lightID = getLightID(mylane)
         free_lane_pos = traci.vehicle.getLanePosition("0ev") / traci.lane.getLength(lane)
         
         if traci.lane.getWaitingTime(lane) >= 0.1 or free_lane_pos >= 0.5:
@@ -237,10 +233,8 @@ def run():
         
         for veh in det_vehs:
             if veh == "0ev":
-                print(veh)
-                #traci.vehicle.changeTarget("0ev", "ce")
                 #print(veh)
-                traci.vehicle.changeTarget("0ev", "ce")
+                #traci.vehicle.changeTarget("0ev", "ce")
                 lane = traci.vehicle.getLaneID("0ev")
                 #print(getNumberOfVehicles(lane))
 
