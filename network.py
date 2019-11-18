@@ -157,7 +157,6 @@ def EmergncyAgent(emPos):
 
     return lightState, num_vehs
 
-
 #def TrafficAgent:
 #    print()
 
@@ -173,13 +172,52 @@ def run():
         #print(num_vehs)
         #print(getRoute('route_0'))
 
-        print(getEmPos())
+        #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
-        #for veh in det_vehs:
-        #    if veh == "0ev":
-        #        print(veh)
-                #traci.vehicle.changeTarget("0ev", "ce")
-                #traci.trafficlight.setRedYellowGreenState("c", "rrrrGG")
+        for veh in det_vehs:
+            if veh == "0ev":
+                print(veh)
+                traci.vehicle.changeTarget("0ev", "ce")
+                lane = traci.vehicle.getLaneID("0ev")
+                print(getNumberOfVehicles(lane))
+
+                
+                #print(traci.lane.getWaitingTime("bc_0"))
+                #setLightState("c","rrrrrr")
+                #print(traci.simulation.getCurrentTime())
+            #setLightState("c","rrrrrr")
+        #print(traci.vehicle.getMinGapLat("0ev"))
+        #if traci.simulation.getCurrentTime() == 23000:
+            #print(traci.lane.getTraveltime("bc_0"))
+            #print(traci.lane.getWaitingTime("bc_0"))
+            #setLightState("c","rrrrGG")
+        	
+       
+        lane = traci.vehicle.getLaneID("0ev")
+        #print(traci.vehicle.getRoadID("0ev"))
+        if traci.lane.getWaitingTime(lane) >= 0.1:
+            print(lane)
+            if lane == "bc_0":
+                print(traci.trafficlight.getControlledLanes("c"))
+                #print(traci.trafficlight.getControlledLanes("c").index("bc_0"))
+                last_traffic = traci.trafficlight.getPhase("c")
+                print(last_traffic)
+                mylight = ""
+                for i in traci.trafficlight.getControlledLanes("c"):
+                    if i == lane:
+                        mylight += "G"
+                    else:
+                        mylight += "r"
+                print (mylight)
+                setLightState("c",mylight)
+            if lane == "ce_0":
+                #setLightState("c",last_traffic)
+                traci.vehicle.changeTarget("0ev", "ed")
+                setLightState("e", "rrrGGGrrrrrrr")
+            if lane == "ed_0":
+                traci.vehicle.changeTarget("0ev", "da")
+                setLightState("d", "GGrrrr")
+
 
         #if step == 100:
         #    traci.vehicle.changeTarget("1", "de")
