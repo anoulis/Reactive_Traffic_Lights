@@ -131,7 +131,31 @@ def checkCurrentLights(road):
         lightID = 'e'
     elif road == 'ce':
         lightID = 'e'
-    elif road == 'ce':
+    elif road == 'ea':
+        lightID = 'a'
+    elif road == 'ed':
+        lightID = 'd'
+    elif road == 'da':
+        lightID = 'a'
+    elif road == 'eb':
+        lightID = 'b'
+    elif road == 'ba':
+        lightID = 'a'
+    elif road == 'ad':
+        lightID = 'd'
+    elif road == 'dc':
+        lightID = 'c'
+    elif road == 'cb':
+        lightID = 'b'
+    elif road == 'be':
+        lightID = 'e'
+    elif road == 'ae':
+        lightID = 'e'
+    elif road == 'de':
+        lightID = 'e'
+    elif road == 'ec':
+        lightID = 'c'
+    elif road == 'be':
         lightID = 'e'
     else:
         print('nada man')
@@ -181,7 +205,7 @@ def run():
                 lane = traci.vehicle.getLaneID("0ev")
                 print(getNumberOfVehicles(lane))
 
-                
+
                 #print(traci.lane.getWaitingTime("bc_0"))
                 #setLightState("c","rrrrrr")
                 #print(traci.simulation.getCurrentTime())
@@ -191,8 +215,8 @@ def run():
             #print(traci.lane.getTraveltime("bc_0"))
             #print(traci.lane.getWaitingTime("bc_0"))
             #setLightState("c","rrrrGG")
-        	
-       
+
+
         lane = traci.vehicle.getLaneID("0ev")
         #print(traci.vehicle.getRoadID("0ev"))
         if traci.lane.getWaitingTime(lane) >= 0.1:
