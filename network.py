@@ -5,6 +5,7 @@ import sys
 import optparse
 import subprocess
 import random
+import time
 
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
@@ -115,11 +116,6 @@ def setRoutingMode(vehID,routingMode):
     #tc.ROUTING_MODE_AGGREGATED : use global smoothed travel times from device.rerouting
 #--------------------------------------------------------------------------------------
 
-
-
-
-## AGENT RELATED CODE
-
 def getLightID(road):
     if road == 'ab':
         lightID = 'b'
@@ -167,6 +163,17 @@ def getLightID(road):
 def checkLightStatus(lightID):
     lights = getLightState(lightID)
     return lights
+
+def startTimer():
+    t0 = time.time()
+    return t0
+
+def stopTimer():
+    t1 = time.time()
+    return t1
+
+
+## AGENT RELATED CODE
 
 def EmergncyAgent(emPos):
     #gets current road of emergency vehicle
