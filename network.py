@@ -158,10 +158,10 @@ def checkCurrentLights(road):
     elif road == 'be':
         lightID = 'e'
     else:
-        print('nada man')
+    #    print('Nothins')
         return
-    lights = getLightState(lightID)
-    return lights
+    #lights = getLightState(lightID)
+    return lightID
 
 ##here we need to write the code for the agent.
 
@@ -184,6 +184,24 @@ def EmergncyAgent(emPos):
 #def TrafficAgent:
 #    print()
 
+def Priority(lane):
+    mylane = lane[:2]
+    if checkCurrentLights(mylane) != None:
+        lightID = checkCurrentLights(mylane)
+        free_lane_pos = traci.vehicle.getLanePosition("0ev") / traci.lane.getLength(lane)
+        if traci.lane.getWaitingTime(lane) >= 0.1 or free_lane_pos >= 0.5:
+            last_traffic = traci.trafficlight.getPhase(lightID)
+            print(last_traffic)
+            mylight = ""
+            for i in traci.trafficlight.getControlledLanes(lightID):
+                if i == lane:
+                    mylight += "G"
+                else:
+                     mylight += "r"
+            print (mylight)
+            setLightState(lightID,mylight)
+
+
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -198,16 +216,18 @@ def run():
 
         #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
+        
         for veh in det_vehs:
             if veh == "0ev":
                 print(veh)
-                traci.vehicle.changeTarget("0ev", "ce")
+                #traci.vehicle.changeTarget("0ev", "ce")
                 lane = traci.vehicle.getLaneID("0ev")
                 print(getNumberOfVehicles(lane))
 
-
+        
                 #print(traci.lane.getWaitingTime("bc_0"))
                 #setLightState("c","rrrrrr")
+                #setLightState("d","rrrrrr")
                 #print(traci.simulation.getCurrentTime())
             #setLightState("c","rrrrrr")
         #print(traci.vehicle.getMinGapLat("0ev"))
@@ -218,7 +238,9 @@ def run():
 
 
         lane = traci.vehicle.getLaneID("0ev")
+        Priority(lane)
         #print(traci.vehicle.getRoadID("0ev"))
+        '''
         if traci.lane.getWaitingTime(lane) >= 0.1:
             print(lane)
             if lane == "bc_0":
@@ -242,7 +264,7 @@ def run():
                 traci.vehicle.changeTarget("0ev", "da")
                 setLightState("d", "GGrrrr")
 
-
+       '''
         #if step == 100:
         #    traci.vehicle.changeTarget("1", "de")
         #    traci.vehicle.changeTarget("3", "de")
