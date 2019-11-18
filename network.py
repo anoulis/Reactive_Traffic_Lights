@@ -135,7 +135,8 @@ def run():
         elif step==10:
             lastRoad = traci.vehicle.getRoadID("0ev")
             print(lastRoad) #will be in ab
-            #setRoute("0ev", [lastRoad,'bc','ce', 'eb', 'bc', 'cd' ,  'de' , 'ec', 'cd' , 'da' ])
+
+            setRoute("0ev", [lastRoad,'bc','ce', 'ed', 'da'])
             #traci.lane.setDisallowed('cd_0', ['1'])
             #traci.vehicle.changeTarget("0ev", "dc")
         #print(getEmPos())

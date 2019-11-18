@@ -1,11 +1,11 @@
 <additionals>
 
-    <rerouter id="rerouter_0" edges= 'bc' probability="1">
+    <!--<rerouter id="rerouter_0" edges= 'bc' probability="1">
         <interval begin="5" end="1000000">
              <destProbReroute id='ab'/>  Assigning a new Destination
              <closingLaneReroute id="ed_0"/>   Closing this lane
        </interval>
-    </rerouter>
+    </rerouter> -->
 
     <e1Detector id="det_ab" lane="ab_0" pos="00" freq="30" file="det.out.xml" />
     <e1Detector id="det_ba" lane="ba_0" pos="00" freq="30" file="det.out.xml" />
