@@ -5,6 +5,7 @@ import sys
 import optparse
 import subprocess
 import random
+import time
 
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
@@ -115,11 +116,6 @@ def setRoutingMode(vehID,routingMode):
     #tc.ROUTING_MODE_AGGREGATED : use global smoothed travel times from device.rerouting
 #--------------------------------------------------------------------------------------
 
-
-
-
-## AGENT RELATED CODE
-
 def getLightID(road):
     if road == 'ab':
         lightID = 'b'
@@ -167,6 +163,17 @@ def checkLightStatus(lightID):
     lights = getLightState(lightID)
     return lights
 
+def startTimer():
+    t0 = time.time()
+    return t0
+
+def stopTimer():
+    t1 = time.time()
+    return t1
+
+
+## AGENT RELATED CODE
+
 def EmergncyAgent(emPos):
     #gets current road of emergency vehicle
     lightState = checkCurrentLights(emPos)
@@ -183,22 +190,53 @@ def EmergncyAgent(emPos):
 
     return lightState, num_vehs
 
+# some global vars
+global last_light
+global last_phase
+global first_time
+first_time =0
+
 def Priority(lane):
+    # string proccesing to get lightID
     mylane = lane[:2]
+    
     if getLightID(mylane) != None:
         lightID = getLightID(mylane)
+
+        '''
+        
+        # if we are in  first simulation step just store first traffic light and 
+        # and traffic light phase as last ones
+        if first_time == 0:
+            last_light = lightID
+            last_phase = getLastPhase(last_light)
+            first_time = first_time = 1
+   
+        # otherwise if changed lane, so we changed also traffic light 
+        # we try to change the previous light to last light phase before the 
+        # emergency hack
+        elif last_light != "" and last_light != lightID:
+            print(getLastPhase(last_light))
+            setLightPhase(last_light,last_phase)
+            print
+            last_light = lightID
+            last_phase = getLastPhase(last_light)
+        '''
+        
+        # we just get the position of car in lane
         free_lane_pos = traci.vehicle.getLanePosition("0ev") / traci.lane.getLength(lane)
         
-        if traci.lane.getWaitingTime(lane) >= 0.1 or free_lane_pos >= 0.5:
-            last_traffic = traci.trafficlight.getPhase(lightID)
-            print(last_traffic)
+        # if car's waiting is going to increase or lane is empty and 
+        # we are approaching the last 30% of lane, make the lane's light green
+        if traci.lane.getWaitingTime(lane) >= 0.1 or free_lane_pos >= 0.65:
+            
+            # we change to green only lights of the lane that the ev is
             mylight = ""
             for i in traci.trafficlight.getControlledLanes(lightID):
                 if i == lane:
                     mylight += "G"
                 else:
                      mylight += "r"
-            print (mylight)
             setLightState(lightID,mylight)
 
 def getLastPhase(lightID):
@@ -215,13 +253,17 @@ def getPhaseName(lights):
         phasename = traci.trafficlight.getPhaseName(lights)
         return phasename
 
+def setLightPhase(lightID,phase):
+    traci.trafficlight.setPhase(lightID,phase)
+
+
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
-        emPos = getEmPos()
-        lights = getLightID(emPos)
+        #det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
+        #emPos = getEmPos()
+        #lights = getLightID(emPos)
         #print('em pos is ', emPos)
         #print(EmergncyAgent(emPos))
 
@@ -230,7 +272,7 @@ def run():
 
         #print(getEmPos())
         #print("vehicles on bc_0 is ", no_vehs)
-        
+        '''
         for veh in det_vehs:
             if veh == "0ev":
                 #print(veh)
@@ -250,9 +292,10 @@ def run():
             #print(traci.lane.getWaitingTime("bc_0"))
             #setLightState("c","rrrrGG")
 
-
-        lane = traci.vehicle.getLaneID("0ev")
+        '''
+        lane = traci.vehicle.getLaneID("0ev") 
         Priority(lane)
+
         #print(traci.vehicle.getRoadID("0ev"))
         '''
         if traci.lane.getWaitingTime(lane) >= 0.1:
