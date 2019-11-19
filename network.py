@@ -40,9 +40,9 @@ class RoadAgent:
 
     def begin(self, id):
         global num_cars_on_road
-        global id_of_cars
-        num_cars_on_road =  no_vehs = traci.lane.getLastStepVehicleNumber(id) #mas.getNumberOfVehicles(id)
-        return num_cars_on_road
+        global cars_ab_0
+        num_cars_on_road =  no_vehs = traci.lane.getLastStepVehicleNumber(id)
+
 
 def run():
     step = 0
@@ -60,7 +60,7 @@ def run():
 if __name__ == "__main__":
     options = get_options()
     first_time = 0
-    road1 = RoadAgent('ab')
+    road1 = RoadAgent('ab_0')
     # check binary
     if options.nogui:
         sumoBinary = checkBinary('sumo')
