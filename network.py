@@ -119,25 +119,24 @@ def setRoutingMode(vehID,routingMode):
 # contains TraCI control loop
 
 def run():
+    oldLaneStatus = " " ;
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_bc")
-
 
         if step==0:
             global initialRoute
             initialRoute = getRoute('route_0')
             print("Initial Route: " + str(initialRoute))
 
+        updatedlaneStatus = traci.vehicle.getRoadID("0ev")
 
-        elif step==20:
+        if updatedlaneStatus != oldLaneStatus:
+            compare(updatedlaneStatus+"_0")
+            oldLaneStatus=updatedlaneStatus
 
-            #Here check for the sensor on the vehicles
-            #lastRoad = traci.vehicle.getRoadID("0ev")
 
-            #Will be called after triggering a sensor
-            compare("bc_0")
 
             #after running the function update
             #the car route with the new restrictions
