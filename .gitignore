@@ -7,3 +7,4 @@ det.out.xml
 tripinfo.xml
 .det.out.xml
 .tripinfo.xml
+__pycache__/
