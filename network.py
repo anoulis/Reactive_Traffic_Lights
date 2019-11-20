@@ -38,11 +38,12 @@ def get_options():
     return options
 
 def Priority(ev):
-    print(lanes_dict.get(ev.getLane()))
+    #print(lanes_dict.get(ev.getLane()))
     current_lane_agent = lanes_dict.get(ev.getLane())
 
-    current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent))
-    free_lane_pos = ev.getPosition /  current_lane_agent.getLaneLength()
+    current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent.getID()))
+    print("paok")
+    free_lane_pos = ev.getPosition() /  current_lane_agent.getLaneLength()
     # if car's waiting is going to increase or lane is empty and
     # we are approaching the last 30% of lane, make the lane's light green
     if current_lane_agent.getLaneWaitingTime() >= 0.1 or free_lane_pos >= 0.65:
@@ -53,7 +54,7 @@ def Priority(ev):
                 mylight += "G"
             else:
                 mylight += "r"
-        current_tl_agent.setLightState(mylight)
+        current_tl_agent.setCustomLights(mylight)
     return
 
 
@@ -61,8 +62,9 @@ def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        #Priority(ev)
+        Priority(ev)
         #functions.Priority()
+        print(lanes_dict.get(ev.getLane()).getID())
         step += 1
 
     traci.close()

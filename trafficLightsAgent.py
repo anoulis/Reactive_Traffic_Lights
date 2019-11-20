@@ -22,6 +22,8 @@ class TrafficLightAgent():
     
     def getControlledLinks(self):
         return network.traci.trafficlight.getControlledLinks(self.id)
+
+    
     '''
 
 
