@@ -179,6 +179,24 @@ def run():
     sys.stdout.flush()
 
 
+def closeLane(laneID):
+    traci.lane.setDisallowed(str(laneID),["emergency"])
+    print("Lane " + str(laneID) + " closed for the ambulance")
+
+def updateEvRoute(finalLane):
+    traci.vehicle.changeTarget("0ev",finalLane )
+    print("Updating goal to corner " + finalLane)
+    print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+
+def getLaneTraffic(laneID):
+    laneInfo = traci.lane.getLastStepVehicleNumber(laneID)
+    print("Traffic on the Lane " + str(laneID) + " : " + str(laneInfo))
+    return laneInfo
+
+
+#Comparing the Traffic on both adjacent lanes
+#The one with more traffic will be closed
+#If there is no traffic both remain open
 
 def compare(laneToCompare):
 
@@ -192,77 +210,44 @@ def compare(laneToCompare):
         print("Lane with " + str(len(links)) + " Junctions : "
         + str(first_lane)+ " and " + str(second_lane))
 
-        #Comparing the Traffic on both adjacent lanes
-        #The one with more traffic will be closed
-        #If there is no traffic both remain open
-
-        first_lane_traffic = traci.lane.getLastStepVehicleNumber(first_lane)
-        print("Traffic on the Lane " + str(first_lane) + " : " + str(first_lane_traffic))
-        second_lane_traffic = traci.lane.getLastStepVehicleNumber(second_lane)
-        print("Traffic on the Lane " + str(second_lane) + " : " + str(second_lane_traffic))
+        first_lane_traffic  = getLaneTraffic(first_lane)
+        second_lane_traffic = getLaneTraffic(second_lane)
 
         if first_lane_traffic > second_lane_traffic:
-            laneToClose = first_lane
-            traci.lane.setDisallowed(str(laneToClose),["emergency"])
-            print("Lane " + str(laneToClose) + " closed for the ambulance")
-            traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
-            print("Updating goal to corner " + str(initialRoute[-1]))
-            print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
-            return laneToClose
+            closeLane(first_lane)
+            updateEvRoute(str(initialRoute[-1]))
 
         elif second_lane_traffic > first_lane_traffic:
-            laneToClose = second_lane
-            traci.lane.setDisallowed(str(laneToClose),["emergency"])
-            print("Lane " + str(laneToClose) + " closed for the ambulance")
-            traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
-            print("Updating goal to corner " + str(initialRoute[-1]))
-            print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
-            return laneToClose
+            closeLane(second_lane)
+            updateEvRoute(str(initialRoute[-1]))
 
         else: print("No lane will be closed")
 
-
     elif len(links) == 3:
 
-        first_lane =  list(links[0])[0]
-        second_lane = list(links[1])[0]
-        third_lane =  list(links[2])[0]
+        first_lane  =  list(links[0])[0]
+        second_lane =  list(links[1])[0]
+        third_lane  =  list(links[2])[0]
+
         print("Lane with " + str(len(links)) + " Junctions : "
         + str(first_lane)  + " , " + str(second_lane) + " and " + str(third_lane))
 
-        first_lane_traffic = traci.lane.getLastStepVehicleNumber(first_lane)
-        print("Traffic on the Lane " + str(first_lane) + " : " + str(first_lane_traffic))
-        second_lane_traffic = traci.lane.getLastStepVehicleNumber(second_lane)
-        print("Traffic on the Lane " + str(second_lane) + " : " + str(second_lane_traffic))
-        third_lane_traffic = traci.lane.getLastStepVehicleNumber(third_lane)
-        print("Traffic on the Lane " + str(third_lane) + " : " + str(third_lane_traffic))
+        first_lane_traffic  = getLaneTraffic(first_lane)
+        second_lane_traffic = getLaneTraffic(second_lane)
+        third_lane_traffic  = getLaneTraffic(third_lane)
 
         if first_lane_traffic > second_lane_traffic and first_lane_traffic > third_lane_traffic :
-            laneToClose = first_lane
-            traci.lane.setDisallowed(str(laneToClose),["emergency"])
-            print("Lane " + str(laneToClose) + " closed for the ambulance")
-            traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
-            print("Updating goal to corner " + str(initialRoute[-1]))
-            print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+            closeLane(first_lane)
 
         elif second_lane_traffic > first_lane_traffic and second_lane_traffic > third_lane_traffic:
-            laneToClose = second_lane
-            traci.lane.setDisallowed(str(laneToClose),["emergency"])
-            print("Lane " + str(laneToClose) + " closed for the ambulance")
-            traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
-            print("Updating goal to corner " + str(initialRoute[-1]))
-            print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+            closeLane(second_lane)
 
         elif third_lane_traffic > first_lane_traffic and third_lane_traffic > second_lane_traffic:
-            laneToClose = third_lane
-            traci.lane.setDisallowed(str(laneToClose),["emergency"])
-            print("Lane " + str(laneToClose) + " closed for the ambulance")
-            traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
-            print("Updating goal to corner " + str(initialRoute[-1]))
-            print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+            closeLane(third_lane)
 
         else : print("No lane will be closed")
 
+        updateEvRoute(str(initialRoute[-1]))
 
 
 # main entry point
