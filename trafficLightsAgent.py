@@ -9,13 +9,21 @@ class TrafficLightAgent():
     
     def getID(self):
         return self.id
-    '''
 
+    
     def setCustomLights(self,state):
         network.traci.trafficlight.setRedYellowGreenState(self.id,state)
 
     def setPhase(self,phase):
         network.traci.trafficlight.setPhase(self.id,phase)
+
+    def getControlledLanes(self):
+        return network.traci.trafficlight.getControlledLanes(self.id)
+    
+    def getControlledLinks(self):
+        return network.traci.trafficlight.getControlledLinks(self.id)
+    '''
+
 
 
     def getPhase():
@@ -26,12 +34,6 @@ class TrafficLightAgent():
     
     def getLastPhase():
 
-
-    def getControlledLanes(self):
-        return network.traci.trafficlight.getControlledLanes(self.id)
-    
-    def getControlledLinks(self):
-        return network.traci.trafficlight.getControlledLinks(self.id)
     
     def getCompleteRedYellowGreenDefinition():
 
@@ -40,12 +42,7 @@ class TrafficLightAgent():
     def setCompleteRedYellowGreenDefinition():
 
             
-    tl_list = []
-    for i in getAllLightIds():
-        tl_list.append(trafficLightsAgent.TrafficLightAgent(str(i)))
-    
-    for tl in tl_list:
-        tl.printID()
+
 
     '''
 

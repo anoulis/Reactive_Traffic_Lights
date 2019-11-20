@@ -6,8 +6,11 @@ import optparse
 import subprocess
 import random
 import time
-from func import mas
-
+import func
+import trafficLightsAgent
+import emergencyVehicle
+import trafficControl
+import lanesAgent
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -34,22 +37,32 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
-class RoadAgent:
-    def __init__(self, id):
-        self.id = id
+def Priority(ev):
+    print(lanes_dict.get(ev.getLane()))
+    current_lane_agent = lanes_dict.get(ev.getLane())
 
-    def begin(self, id):
-        global num_cars_on_road
-        global cars_ab_0
-        num_cars_on_road =  no_vehs = traci.lane.getLastStepVehicleNumber(id)
+    current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent))
+    free_lane_pos = ev.getPosition /  current_lane_agent.getLaneLength()
+    # if car's waiting is going to increase or lane is empty and
+    # we are approaching the last 30% of lane, make the lane's light green
+    if current_lane_agent.getLaneWaitingTime() >= 0.1 or free_lane_pos >= 0.65:
+        # we change to green only lights of the lane that the ev is
+        mylight = ""
+        for i in current_tl_agent.getControlledLanes():
+            if i == current_lane_agent:
+                mylight += "G"
+            else:
+                mylight += "r"
+        current_tl_agent.setLightState(mylight)
+    return
 
 
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        road1.begin('ab_0')
-        print(num_cars_on_road)
+        #Priority(ev)
+        #functions.Priority()
         step += 1
 
     traci.close()
@@ -60,7 +73,6 @@ def run():
 if __name__ == "__main__":
     options = get_options()
     first_time = 0
-    road1 = RoadAgent('ab_0')
     # check binary
     if options.nogui:
         sumoBinary = checkBinary('sumo')
@@ -70,4 +82,25 @@ if __name__ == "__main__":
     # traci starts sumo as a subprocess and then this script connects and runs
     traci.start([sumoBinary, "-c", "network.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
+                
+   
+    functions = func.functions 
+    tlAgent = trafficLightsAgent.TrafficLightAgent
+
+    evAgent = emergencyVehicle.EmergencyVehicle
+    ev = evAgent("0ev")
+
+    lanesAgent = lanesAgent.LanesAgent
+
+    #tl_list = []
+    tl_dict= {}
+    lanes_dict = {}
+    lanes_dict["ac"] = lanesAgent("ac")
+    for k in traci.lane.getIDList()[42:]:
+        temp = k[:2]
+        lanes_dict[str(temp)] = lanesAgent(str(temp))
+    
+    for i in functions.getAllLightIds():
+       # tl_list.append( tlAgent(str(i)))
+        tl_dict[str(i)] = tlAgent(str(i))
     run()

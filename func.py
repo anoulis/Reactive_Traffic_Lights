@@ -6,8 +6,10 @@ import optparse
 import subprocess
 import random
 import time
+import network 
+from network import traci
 
-class mas:
+class functions:
     # # we need to import some python modules from the $SUMO_HOME/tools directory
     # if 'SUMO_HOME' in os.environ:
     #     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
