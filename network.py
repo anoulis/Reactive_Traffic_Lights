@@ -42,7 +42,6 @@ def Priority(ev):
     current_lane_agent = lanes_dict.get(ev.getLane())
 
     current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent.getID()))
-    print("paok")
     free_lane_pos = ev.getPosition() /  current_lane_agent.getLaneLength()
     # if car's waiting is going to increase or lane is empty and
     # we are approaching the last 30% of lane, make the lane's light green
@@ -50,7 +49,7 @@ def Priority(ev):
         # we change to green only lights of the lane that the ev is
         mylight = ""
         for i in current_tl_agent.getControlledLanes():
-            if i == current_lane_agent:
+            if i == current_lane_agent.getID():
                 mylight += "G"
             else:
                 mylight += "r"
