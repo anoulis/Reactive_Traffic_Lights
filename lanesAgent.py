@@ -11,6 +11,9 @@ class LanesAgent():
     def getID(self):
         return self.id
 
+    def getFixedID(self):
+        return self.fixed_id
+
     def getLaneLength(self):
         return network.traci.lane.getLength(self.fixed_id)
     
