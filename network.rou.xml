@@ -31,15 +31,35 @@
     <vehicle id="0ev" type="ev" route="route_0" depart="0"/>
 
     <trip id="0" depart="0.00" from="ad" to="be"/>
-    <trip id="1" depart="1.00" from="cb" to="ad"/>
-    <trip id="2" depart="2.00" from="ab" to="ae"/>
-    <trip id="3" depart="3.00" from="eb" to="eb"/>
-    <trip id="4" depart="4.00" from="be" to="da"/>
-    <trip id="5" depart="5.00" from="cb" to="ce"/>
-    <trip id="6" depart="6.00" from="bc" to="be"/>
-    <trip id="7" depart="7.00" from="dc" to="bc"/>
-    <trip id="8" depart="8.00" from="ea" to="dc"/>
-    <trip id="9" depart="9.00" from="bc" to="ad"/>
+    <trip id="1" depart="0.00" from="cb" to="ad"/>
+    <trip id="2" depart="0.00" from="ab" to="ae"/>
+    <trip id="3" depart="0.00" from="eb" to="eb"/>
+    <trip id="4" depart="0.00" from="be" to="da"/>
+    <trip id="5" depart="0.00" from="cb" to="ce"/>
+    <trip id="6" depart="0.00" from="bc" to="be"/>
+    <trip id="7" depart="0.00" from="dc" to="bc"/>
+    <trip id="8" depart="0.00" from="ea" to="dc"/>
+    <trip id="9" depart="0.00" from="bc" to="ad"/>
+    <trip id="10" depart="0.00" from="ad" to="be"/>
+    <trip id="11" depart="1.00" from="cb" to="ad"/>
+    <trip id="12" depart="1.00" from="ab" to="ae"/>
+    <trip id="13" depart="1.00" from="eb" to="eb"/>
+    <trip id="14" depart="1.00" from="be" to="da"/>
+    <trip id="15" depart="1.00" from="cb" to="ce"/>
+    <!-- <trip id="16" depart="1.00" from="bc" to="be"/>
+    <trip id="17" depart="1.00" from="dc" to="bc"/>
+    <trip id="18" depart="1.00" from="ea" to="dc"/>
+    <trip id="19" depart="1.00" from="bc" to="ad"/>
+    <trip id="20" depart="2.00" from="ad" to="be"/>
+    <trip id="21" depart="2.00" from="cb" to="ad"/>
+    <trip id="22" depart="2.00" from="ab" to="ae"/> -->
+    <trip id="23" depart="2.00" from="eb" to="eb"/>
+    <trip id="24" depart="2.00" from="be" to="da"/>
+    <trip id="25" depart="2.00" from="cb" to="ce"/>
+    <trip id="26" depart="2.00" from="bc" to="be"/>
+    <trip id="27" depart="2.00" from="dc" to="bc"/>
+    <trip id="28" depart="2.00" from="ea" to="dc"/>
+    <trip id="29" depart="2.00" from="bc" to="ad"/>
 
 
 
