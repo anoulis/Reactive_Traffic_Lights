@@ -191,9 +191,8 @@ class functions:
 
 
         return lightState, num_vehs
-
     # some global vars
-'''
+    '''
     def Priority(lane):
         global last_light
         global last_phase
@@ -241,7 +240,7 @@ class functions:
                     else:
                          mylight += "r"
                 setLightState(lightID,mylight)
-'''
+    '''
 
     def getLastPhase(lightID):
         if lightID == None:
