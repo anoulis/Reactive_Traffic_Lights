@@ -1,7 +1,3 @@
-import trafficLightsAgent
-from trafficLightsAgent import TrafficLightAgent
-from emergencyVehicle import EmergencyVehicle
-from lanesAgent import LanesAgent
 import network 
 import func
 
@@ -27,6 +23,8 @@ def Priority(ev,lanes_dict,tl_dict ):
             current_tl_agent.setCustomLights(mylight)
             print(mylight)
     return
+
+
 
 
 
