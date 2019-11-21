@@ -1,3 +1,6 @@
+#55
+
+
 #!/usr/bin/env python
 
 import os
@@ -82,7 +85,7 @@ def run():
             oldLaneStatus=updatedlaneStatus
 
         #Priority(ev)
-        #trafficControl.Priority(ev,lanes_dict,tl_dict )
+        trafficControl.Priority(ev,lanes_dict,tl_dict )
         #functions.Priority()
         step += 1
 
@@ -119,8 +122,8 @@ if __name__ == "__main__":
         temp = k[:2]
         lanes_dict[str(temp)] = lanesAgent(str(temp))
 
-    #for i in functions.getAllLightIds():
+    for i in functions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
-        #tl_dict[str(i)] = tlAgent(str(i))
+        tl_dict[str(i)] = tlAgent(str(i))
     run()
     #test
