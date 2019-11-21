@@ -81,11 +81,11 @@ def run():
         traci.simulationStep()
 
 
-        #updatedlaneStatus = traci.vehicle.getRoadID("0ev")
-        #if updatedlaneStatus != oldLaneStatus:
-        #    func.compare(updatedlaneStatus+"_0", initialRoute)
-        #    oldLaneStatus=updatedlaneStatus
-        func.updateEvRoute(str(initialRoute[-1]))
+        updatedlaneStatus = traci.vehicle.getRoadID("0ev")
+        if updatedlaneStatus != oldLaneStatus:
+            func.compare(updatedlaneStatus+"_0", initialRoute)
+            oldLaneStatus=updatedlaneStatus
+        #func.updateEvRoute(str(initialRoute[-1])) Testing , not to impl.
         #Priority(ev)
         trafficControl.Priority(ev,lanes_dict,tl_dict )
         #functions.Priority()
