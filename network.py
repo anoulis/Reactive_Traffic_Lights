@@ -64,8 +64,10 @@ def Priority(ev):
 
 def run():
     step = 0
+    oldLaneStatus=0
     global initialRoute
-    initialRoute = getRoute('route_0')
+
+    initialRoute = traci.vehicle.getRoute("0ev")
     print("Initial Route: " + str(initialRoute))
     traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
     print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
@@ -73,13 +75,14 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
 
+
         updatedlaneStatus = traci.vehicle.getRoadID("0ev")
         if updatedlaneStatus != oldLaneStatus:
-            compare(updatedlaneStatus+"_0")
+            func.compare(updatedlaneStatus+"_0", initialRoute)
             oldLaneStatus=updatedlaneStatus
 
         #Priority(ev)
-        trafficControl.Priority(ev,lanes_dict,tl_dict )
+        #trafficControl.Priority(ev,lanes_dict,tl_dict )
         #functions.Priority()
         step += 1
 
@@ -116,8 +119,8 @@ if __name__ == "__main__":
         temp = k[:2]
         lanes_dict[str(temp)] = lanesAgent(str(temp))
 
-    for i in functions.getAllLightIds():
+    #for i in functions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
-        tl_dict[str(i)] = tlAgent(str(i))
+        #tl_dict[str(i)] = tlAgent(str(i))
     run()
     #test

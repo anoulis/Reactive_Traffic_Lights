@@ -281,7 +281,7 @@ def getLaneTraffic(laneID):
 #The one with more traffic will be closed
 #If there is no traffic both remain open
 
-def compare(laneToCompare):
+def compare(laneToCompare,initialRoute):
 
     links = traci.lane.getLinks(laneToCompare,False)
 
