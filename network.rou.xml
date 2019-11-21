@@ -1,22 +1,28 @@
- 
+
 <routes>
    <vType id="car"
    			vClass="passenger" length="5" accel="3.5" decel="2.2"
    			sigma="1.0" maxSpeed="10"/>
+        <param key="has.rerouting.device" value="true"/>
 
    <vType id="ev"
       		vClass="emergency" length="7" accel="5.5" decel="2.2" sigma="1.0"
       		maxSpeed="20" guiShape="emergency" speedFactor="2.0"
       		minGapLat="0.2"/>
 
-    <route id="route_1" edges="ab bc cd da" />
-    <route id="route_0" edges="ab bc ce ed da ae eb ba" />
-    <!--<flow id="carflow" type="car" beg="0" end="0" number="5" from="ab" to="da"/>
-    <flow id="evflow" type="ev" beg="0" end="0" number="1" from="ab" to="da"/>-->
-    
+    <route id="route_0" edges="ab bc cd da" />
     <!--
 
-    <vehicle id="0" type="car" route="route_0" depart="0"/>
+    <route id="route_0" edges="ab bc ce ed da ae eb ba" />
+
+    -->
+
+    <!--<flow id="carflow" type="car" beg="0" end="0" number="5" from="ab" to="da"/>
+    <flow id="evflow" type="ev" beg="0" end="0" number="1" from="ab" to="da"/>-->
+
+    <!--
+
+    <vehicle id="0" type="carAll" route="route_0" depart="0"/>
     <vehicle id="1" type="car" route="route_0" depart="3"/>
     <vehicle id="2" type="car" route="route_0" depart="6"/>
     <vehicle id="3" type="car" route="route_0" depart="9"/>
@@ -25,27 +31,66 @@
     -->
 
     <vehicle id="0ev" type="ev" route="route_0" depart="0"/>
-    <trip id="0" depart="0.00" from="ad" to="be"/>
-    <trip id="1" depart="1.00" from="cb" to="ad"/>
-    <trip id="2" depart="2.00" from="ab" to="ae"/>
-    <trip id="3" depart="3.00" from="eb" to="eb"/>
-    <trip id="4" depart="4.00" from="be" to="da"/>
-    <trip id="5" depart="5.00" from="cb" to="ce"/>
-    <trip id="6" depart="6.00" from="bc" to="be"/>
-    <trip id="7" depart="7.00" from="dc" to="bc"/>
-    <trip id="8" depart="8.00" from="ea" to="dc"/>
-    <trip id="9" depart="9.00" from="bc" to="ad"/>
-    <trip id="10" depart="10.00" from="cd" to="eb"/>
-    <trip id="11" depart="11.00" from="de" to="da"/>
-    <trip id="12" depart="12.00" from="ba" to="cb"/>
-    <trip id="13" depart="13.00" from="ab" to="cb"/>
-    <trip id="14" depart="14.00" from="ed" to="cb"/>
-    <trip id="15" depart="15.00" from="bc" to="da"/>
-    <trip id="16" depart="16.00" from="dc" to="ea"/>
-    <trip id="17" depart="17.00" from="cd" to="da"/>
-    <trip id="18" depart="18.00" from="ad" to="ab"/>
-    <trip id="19" depart="19.00" from="ba" to="ab"/>
 
-    
+    <trip id="0" depart="0.00" from="ad" to="be"/>
+    <trip id="1" depart="0.00" from="cb" to="ad"/>
+    <trip id="2" depart="0.00" from="ab" to="ae"/>
+    <trip id="3" depart="0.00" from="eb" to="eb"/>
+    <trip id="4" depart="0.00" from="be" to="da"/>
+    <trip id="5" depart="0.00" from="cb" to="ce"/>
+    <trip id="6" depart="0.00" from="bc" to="be"/>
+    <trip id="7" depart="0.00" from="dc" to="bc"/>
+    <trip id="8" depart="0.00" from="ea" to="dc"/>
+    <trip id="9" depart="0.00" from="bc" to="ad"/>
+    <trip id="10" depart="0.00" from="ad" to="be"/>
+    <trip id="11" depart="1.00" from="cb" to="ad"/>
+    <trip id="12" depart="1.00" from="ab" to="ae"/>
+    <trip id="13" depart="1.00" from="eb" to="eb"/>
+    <trip id="14" depart="1.00" from="be" to="da"/>
+    <trip id="15" depart="1.00" from="cb" to="ce"/>
+    <trip id="16" depart="1.00" from="bc" to="be"/>
+    <trip id="17" depart="1.00" from="dc" to="bc"/>
+    <trip id="18" depart="1.00" from="ea" to="dc"/>
+    <trip id="19" depart="1.00" from="bc" to="ad"/>
+    <trip id="20" depart="2.00" from="ad" to="be"/>
+    <trip id="21" depart="2.00" from="cb" to="ad"/>
+    <trip id="22" depart="2.00" from="ab" to="ae"/>
+    <trip id="23" depart="2.00" from="eb" to="eb"/>
+    <trip id="24" depart="2.00" from="be" to="da"/>
+    <trip id="25" depart="2.00" from="cb" to="ce"/>
+    <trip id="26" depart="2.00" from="bc" to="be"/>
+    <trip id="27" depart="2.00" from="dc" to="bc"/>
+    <trip id="28" depart="2.00" from="ea" to="dc"/>
+    <trip id="29" depart="2.00" from="bc" to="ad"/>
+    <trip id="30" depart="0.00" from="ad" to="be"/>
+    <trip id="31" depart="0.00" from="cb" to="ad"/>
+    <trip id="32" depart="0.00" from="ab" to="ae"/>
+    <trip id="33" depart="0.00" from="eb" to="eb"/>
+    <trip id="34" depart="0.00" from="be" to="da"/>
+    <trip id="35" depart="0.00" from="cb" to="ce"/>
+    <trip id="36" depart="0.00" from="bc" to="be"/>
+    <trip id="37" depart="0.00" from="dc" to="bc"/>
+    <trip id="38" depart="0.00" from="ea" to="dc"/>
+    <trip id="39" depart="0.00" from="bc" to="ad"/>
+    <trip id="40" depart="0.00" from="ad" to="be"/>
+    <trip id="41" depart="1.00" from="cb" to="ad"/>
+    <trip id="42" depart="1.00" from="ab" to="ae"/>
+    <trip id="43" depart="1.00" from="eb" to="eb"/>
+    <trip id="44" depart="1.00" from="be" to="da"/>
+    <trip id="45" depart="1.00" from="cb" to="ce"/>
+    <trip id="46" depart="1.00" from="bc" to="be"/>
+    <trip id="47" depart="1.00" from="dc" to="bc"/>
+    <trip id="48" depart="1.00" from="ea" to="dc"/>
+    <trip id="49" depart="1.00" from="bc" to="ad"/>
+    <trip id="50" depart="2.00" from="ad" to="be"/>
+    <trip id="51" depart="2.00" from="cb" to="ad"/>
+    <trip id="52" depart="2.00" from="ab" to="ae"/>
+    <trip id="53" depart="2.00" from="eb" to="eb"/>
+    <trip id="54" depart="2.00" from="be" to="da"/>
+    <trip id="55" depart="2.00" from="cb" to="ce"/>
+    <trip id="56" depart="2.00" from="bc" to="be"/>
+    <trip id="57" depart="2.00" from="dc" to="bc"/>
+    <trip id="58" depart="2.00" from="ea" to="dc"/>
+    <trip id="59" depart="2.00" from="bc" to="ad"/>
 
 </routes>

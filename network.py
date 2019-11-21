@@ -1,3 +1,8 @@
+# Normal
+# Just Dynamic Lights
+# Just Dynamic Ambulance
+#40 Dynamic Ambulance & Lights
+
 #!/usr/bin/env python
 
 import os
@@ -40,8 +45,24 @@ def get_options():
 
 def run():
     step = 0
+    oldLaneStatus=0
+    global initialRoute
+
+    initialRoute = traci.vehicle.getRoute("0ev")
+    print("Initial Route: " + str(initialRoute))
+    traci.vehicle.changeTarget("0ev", str(initialRoute[-1]))
+    print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
+
+        updatedlaneStatus = traci.vehicle.getRoadID("0ev")
+
+        if updatedlaneStatus != oldLaneStatus:
+            func.compare(updatedlaneStatus+"_0", initialRoute)
+            oldLaneStatus=updatedlaneStatus
+        #func.updateEvRoute(str(initialRoute[-1])) Testing , not to impl.
+
         #Priority(ev)
         trafficControl.Priority(ev,lanes_dict,tl_dict,det_dict)
         step += 1
@@ -63,8 +84,8 @@ if __name__ == "__main__":
     # traci starts sumo as a subprocess and then this script connects and runs
     traci.start([sumoBinary, "-c", "network.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
-                
-    myfunctions = func.functions 
+
+    myfunctions = func.functions
     evAgent = emergencyVehicle.EmergencyVehicle
     lanesAgent = lanesAgent.LanesAgent
     tlAgent = trafficLightsAgent.TrafficLightAgent
@@ -81,7 +102,7 @@ if __name__ == "__main__":
         temp = k[:2]
         lanes_dict[str(temp)] = lanesAgent(str(temp))
         det_dict[str(temp)] = detectorAgent(str(temp))
-    
+
     for i in myfunctions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
         tl_dict[str(i)] = tlAgent(str(i))
