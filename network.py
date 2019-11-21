@@ -1,7 +1,3 @@
-# Normal
-# Just Dynamic Lights
-# Just Dynamic Ambulance
-#40 Dynamic Ambulance & Lights
 
 #!/usr/bin/env python
 
