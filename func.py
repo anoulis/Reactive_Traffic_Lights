@@ -6,7 +6,7 @@ import optparse
 import subprocess
 import random
 import time
-import network 
+import network
 from network import traci
 
 class functions:
@@ -258,3 +258,76 @@ class functions:
 
     def setLightPhase(lightID,phase):
         traci.trafficlight.setPhase(lightID,phase)
+
+
+#Manage the Ambulance Behaviour
+
+def closeLane(laneID):
+    traci.lane.setDisallowed(str(laneID),["emergency"])
+    print("Lane " + str(laneID) + " closed for the ambulance")
+
+def updateEvRoute(finalLane):
+    traci.vehicle.changeTarget("0ev",finalLane )
+    print("Updating goal to corner " + finalLane)
+    print("Modified Route: " + str(traci.vehicle.getRoute("0ev")))
+
+def getLaneTraffic(laneID):
+    laneInfo = traci.lane.getLastStepVehicleNumber(laneID)
+    print("Traffic on the Lane " + str(laneID) + " : " + str(laneInfo))
+    return laneInfo
+
+
+#Comparing the Traffic on both adjacent lanes
+#The one with more traffic will be closed
+#If there is no traffic both remain open
+
+def compare(laneToCompare):
+
+    links = traci.lane.getLinks(laneToCompare,False)
+
+    if len(links) == 2 :
+
+        first_lane= list(links[0])[0]
+        second_lane = list(links[1])[0]
+
+        print("Lane with " + str(len(links)) + " Junctions : "
+        + str(first_lane)+ " and " + str(second_lane))
+
+        first_lane_traffic  = getLaneTraffic(first_lane)
+        second_lane_traffic = getLaneTraffic(second_lane)
+
+        if first_lane_traffic > second_lane_traffic:
+            closeLane(first_lane)
+            updateEvRoute(str(initialRoute[-1]))
+
+        elif second_lane_traffic > first_lane_traffic:
+            closeLane(second_lane)
+            updateEvRoute(str(initialRoute[-1]))
+
+        else: print("No lane will be closed")
+
+    elif len(links) == 3:
+
+        first_lane  =  list(links[0])[0]
+        second_lane =  list(links[1])[0]
+        third_lane  =  list(links[2])[0]
+
+        print("Lane with " + str(len(links)) + " Junctions : "
+        + str(first_lane)  + " , " + str(second_lane) + " and " + str(third_lane))
+
+        first_lane_traffic  = getLaneTraffic(first_lane)
+        second_lane_traffic = getLaneTraffic(second_lane)
+        third_lane_traffic  = getLaneTraffic(third_lane)
+
+        if first_lane_traffic > second_lane_traffic and first_lane_traffic > third_lane_traffic :
+            closeLane(first_lane)
+
+        elif second_lane_traffic > first_lane_traffic and second_lane_traffic > third_lane_traffic:
+            closeLane(second_lane)
+
+        elif third_lane_traffic > first_lane_traffic and third_lane_traffic > second_lane_traffic:
+            closeLane(third_lane)
+
+        else : print("No lane will be closed")
+
+        updateEvRoute(str(initialRoute[-1]))
