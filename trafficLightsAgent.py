@@ -1,8 +1,11 @@
 import network
 
 class TrafficLightAgent():
+
     def __init__(self, id):
         self.id = id
+        self.behaviour = "normal"
+
 
     def printID(self):
         print("The ID is " + self.id)
@@ -24,29 +27,6 @@ class TrafficLightAgent():
         return network.traci.trafficlight.getControlledLinks(self.id)
 
     
-    '''
-
-
-
-    def getPhase():
-
-    
-    def setLastPhase():
-
-    
-    def getLastPhase():
-
-    
-    def getCompleteRedYellowGreenDefinition():
-
-    def getNextSwitch():
-
-    def setCompleteRedYellowGreenDefinition():
-
-            
-
-
-    '''
 
     
 

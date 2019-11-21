@@ -11,6 +11,7 @@ import trafficLightsAgent
 import emergencyVehicle
 import trafficControl
 import lanesAgent
+import detectorAgent
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -37,38 +38,12 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
-'''
-def Priority(ev):
-    #print(lanes_dict.get(ev.getLane()))
-    if (lanes_dict.get(ev.getLane()) != None):
-            
-        current_lane_agent = lanes_dict.get(ev.getLane())
-        
-        current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent.getID()))
-        free_lane_pos = ev.getPosition() /  current_lane_agent.getLaneLength()
-        # if car's waiting is going to increase or lane is empty and
-        # we are approaching the last 30% of lane, make the lane's light green
-        if current_lane_agent.getLaneWaitingTime() >= 0.1 or free_lane_pos >= 0.65:
-            # we change to green only lights of the lane that the ev is
-            mylight = ""
-            print(current_tl_agent.getControlledLanes())
-            for i in current_tl_agent.getControlledLanes():
-                if i == current_lane_agent.getFixedID():
-                    mylight += "G"
-                else:
-                    mylight += "r"
-            current_tl_agent.setCustomLights(mylight)
-            print(mylight)
-    return
-'''
-
 def run():
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         #Priority(ev)
-        trafficControl.Priority(ev,lanes_dict,tl_dict )
-        #functions.Priority()
+        trafficControl.Priority(ev,lanes_dict,tl_dict,det_dict)
         step += 1
 
     traci.close()
@@ -90,19 +65,22 @@ if __name__ == "__main__":
                              "--tripinfo-output", "tripinfo.xml"])
                 
     functions = func.functions 
-
     evAgent = emergencyVehicle.EmergencyVehicle
-    ev = evAgent("0ev")
-
     lanesAgent = lanesAgent.LanesAgent
     tlAgent = trafficLightsAgent.TrafficLightAgent
+    detectorAgent = detectorAgent.DetectorAgent
 
+    det_dict = {}
     tl_dict= {}
     lanes_dict = {}
+
+    ev = evAgent("0ev")
     lanes_dict["ac"] = lanesAgent("ac")
+    det_dict["ac"] = detectorAgent("ac")
     for k in traci.lane.getIDList()[42:]:
         temp = k[:2]
         lanes_dict[str(temp)] = lanesAgent(str(temp))
+        det_dict[str(temp)] = detectorAgent(str(temp))
     
     for i in functions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
