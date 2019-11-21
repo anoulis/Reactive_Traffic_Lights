@@ -35,27 +35,27 @@ class functions:
     #     options, args = opt_parser.parse_args()
     #     return options
 
-    def getEmPos(self):
+    def getEmPos():
         emPos = traci.vehicle.getRoadID('0ev')
         #return the road id
         return emPos
 
-    def getLightState(self,lightsID):
+    def getLightState(lightsID):
         light = traci.trafficlight.getRedYellowGreenState(lightsID)
         #returns the lights at the intersection values
         return light
 
-    def getNumberOfVehicles(self,laneID):
+    def getNumberOfVehicles(laneID):
         no_vehs = traci.lane.getLastStepVehicleNumber(laneID)
         #returns the number of vehicles in the lane ID
         return no_vehs
 
-    def getAllLightIds(self):
+    def getAllLightIds():
         lightList = traci.trafficlight.getIDList()
         #returns full list of lights ID in the env.
         return lightList
 
-    def getRoute(self,routeID):
+    def getRoute(routeID):
         route = traci.route.getEdges(routeID)
         return route
 
@@ -66,7 +66,7 @@ class functions:
     #Setters (Actuators)
 
     #Traffic Lights  ----------------------------------------------------------------
-    def setLightState(self,lightID,state):
+    def setLightState(lightID,state):
         traci.trafficlight.setRedYellowGreenState(lightID,state)
         #Example : setLightState( "c" ,"GrGGGG")
         #Sets the named tl's state as a tuple of light definitions from
@@ -74,7 +74,7 @@ class functions:
         #lower case letters mean that the stream has to decelerate.
 
     #Vehicles--------------------------------------------------------------------------------
-    def changeLane(self,vehID,laneID,duration):
+    def changeLane(vehID,laneID,duration):
         traci.vehicle.changeLane(vehID, laneID, duration)
         #changeLane(string,int,double) -> None
         #Forces a lane change to the lane with the given index; if successful,
@@ -82,7 +82,7 @@ class functions:
 
 
     #Optional
-    def changeSublane(self,vehID,latDist):
+    def changeSublane(vehID,latDist):
         traci.vehicle.changeSublane(vehID, latDist)
         #changeLane(string, double) -> None
         #changeSublane("0ev",-1)
@@ -94,7 +94,7 @@ class functions:
 
 
     # Routes--------------------------------------------------------------------------------
-    def setRoute(self,vehID,edgeList):
+    def setRoute(vehID,edgeList):
         traci.vehicle.setRoute(vehID, edgeList)
         #setRoute(string, list) ->  None
         #changes the vehicle route to given edges list.
@@ -111,14 +111,14 @@ class functions:
     #-----Check if we are using IDs for the routes
 
     #Optional------------------------------------------------------------------------------
-    def setRoutingMode(self,vehID,routingMode):
+    def setRoutingMode(vehID,routingMode):
         traci.vehicle.setRoutingMode(vehID, routingMode)
         #sets the current routing mode:
         #tc.ROUTING_MODE_DEFAULT    : use weight storages and fall-back to edge speeds (default)
         #tc.ROUTING_MODE_AGGREGATED : use global smoothed travel times from device.rerouting
     #--------------------------------------------------------------------------------------
 
-    def getLightID(self,road):
+    def getLightID(road):
         if road == 'ab':
             lightID = 'b'
         elif road == 'bc':
@@ -161,25 +161,24 @@ class functions:
 
     ##here we need to write the code for the agent.
 
-    def checkLightStatus(self,lightID):
-        lights = getLightState(self,lightID)
+    def checkLightStatus(lightID):
+        lights = getLightState(lightID)
         return lights
 
-    def startTimer(self):
+    def startTimer():
         t0 = time.time()
         return t0
 
-    def stopTimer(self):
+    def stopTimer():
         t1 = time.time()
         return t1
 
 
-    '''
     ## AGENT RELATED CODE
 
-    def EmergncyAgent(self,emPos):
+    def EmergncyAgent(emPos):
         #gets current road of emergency vehicle
-        lightState = checkCurrentLights(self,emPos)
+        lightState = checkCurrentLights(emPos)
         num_vehs = getNumberOfVehicles(emPos + '_0')
         # if lightState != None:
         #     print(lightState)
@@ -193,7 +192,6 @@ class functions:
 
         return lightState, num_vehs
     # some global vars
-    '''
     '''
     def Priority(lane):
         global last_light
@@ -244,24 +242,24 @@ class functions:
                 setLightState(lightID,mylight)
     '''
 
-    def getLastPhase(self,lightID):
+    def getLastPhase(lightID):
         if lightID == None:
             return
         else:
             last = traci.trafficlight.getPhase(lightID)
             return last
 
-    def getPhaseName(self,lights):
+    def getPhaseName(lights):
         if lights == None:
             return
         else:
             phasename = traci.trafficlight.getPhaseName(lights)
             return phasename
 
-    def setLightPhase(self,lightID,phase):
+    def setLightPhase(lightID,phase):
         traci.trafficlight.setPhase(lightID,phase)
 
-    def setProgram(self,lightID):
+    def setProgram(lightID):
         if lightID == "a":
             traci.trafficlight.setProgram(lightID,'0')
         if lightID == "b":

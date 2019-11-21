@@ -64,7 +64,7 @@ if __name__ == "__main__":
     traci.start([sumoBinary, "-c", "network.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
                 
-    functions = func.functions 
+    myfunctions = func.functions 
     evAgent = emergencyVehicle.EmergencyVehicle
     lanesAgent = lanesAgent.LanesAgent
     tlAgent = trafficLightsAgent.TrafficLightAgent
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         lanes_dict[str(temp)] = lanesAgent(str(temp))
         det_dict[str(temp)] = detectorAgent(str(temp))
     
-    for i in functions.getAllLightIds():
+    for i in myfunctions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
         tl_dict[str(i)] = tlAgent(str(i))
     run()
