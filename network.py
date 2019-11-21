@@ -41,9 +41,9 @@ def get_options():
 def Priority(ev):
     #print(lanes_dict.get(ev.getLane()))
     if (lanes_dict.get(ev.getLane()) != None):
-            
+
         current_lane_agent = lanes_dict.get(ev.getLane())
-        
+
         current_tl_agent = tl_dict.get(func.functions.getLightID(current_lane_agent.getID()))
         free_lane_pos = ev.getPosition() /  current_lane_agent.getLaneLength()
         # if car's waiting is going to increase or lane is empty and
@@ -88,8 +88,8 @@ if __name__ == "__main__":
     # traci starts sumo as a subprocess and then this script connects and runs
     traci.start([sumoBinary, "-c", "network.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
-                
-    functions = func.functions 
+
+    functions = func.functions
 
     evAgent = emergencyVehicle.EmergencyVehicle
     ev = evAgent("0ev")
@@ -103,8 +103,9 @@ if __name__ == "__main__":
     for k in traci.lane.getIDList()[42:]:
         temp = k[:2]
         lanes_dict[str(temp)] = lanesAgent(str(temp))
-    
+
     for i in functions.getAllLightIds():
        # tl_list.append( tlAgent(str(i)))
         tl_dict[str(i)] = tlAgent(str(i))
     run()
+    #test
